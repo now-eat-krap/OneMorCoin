@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="p-3 text-white mx-1 my-1 px-5" style="margin-bottom:0px; background-color:black; border: 1px solid black; border-radius: 15px;">Home</h2>
+  <div class="p-3 m-3 table-responsive" style="background-color:#495057; border-radius: 15px;">
+  <h3>이번 주 주요 글로벌 거시 일정</h3>
+    <table class="table table-dark table-bordered p-3" style="margin:auto;">
+            <thead>
+                <tr>
+                    <th {% if week.0|date:"d" == today|date:"d"%} style="background-color:#FFC939; font-weight: bold; border-top-left-radius: 15px; border-top-right-radius: 15px;" class="text-dark"{% endif %}>{{week.0|date:"d"}} (월)</th>
+                    <th {% if week.1|date:"d" == today|date:"d"%} style="background-color:#FFC939; font-weight: bold; border-top-left-radius: 15px; border-top-right-radius: 15px;" class="text-dark" {% endif %}>{{week.1|date:"d"}} (화)</th>
+                    <th {% if week.2|date:"d" == today|date:"d"%} style="background-color:#FFC939; font-weight: bold; border-top-left-radius: 15px; border-top-right-radius: 15px;" class="text-dark" {% endif %}>{{week.2|date:"d"}} (수)</th>
+                    <th {% if week.3|date:"d" == today|date:"d"%} style="background-color:#FFC939; font-weight: bold; border-top-left-radius: 15px; border-top-right-radius: 15px;" class="text-dark" {% endif %}>{{week.3|date:"d"}} (목)</th>
+                    <th {% if week.4|date:"d" == today|date:"d"%} style="background-color:#FFC939; font-weight: bold; border-top-left-radius: 15px; border-top-right-radius: 15px;" class="text-dark" {% endif %}>{{week.4|date:"d"}} (금)</th>
+                    <th {% if week.5|date:"d" == today|date:"d"%} style="background-color:#FFC939; font-weight: bold; border-top-left-radius: 15px; border-top-right-radius: 15px;" class="text-dark" {% endif %}>{{week.5|date:"d"}} (토)</th>
+                    <th {% if week.6|date:"d" == today|date:"d"%} style="background-color:#FFC939; font-weight: bold; border-top-left-radius: 15px; border-top-right-radius: 15px;" class="text-dark" {% endif %}>{{week.6|date:"d"}} (일)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  {% for we in week %}
+                    <td {% if we|date:"d" == today|date:"d"%} style="background-color:#FFC939; font-weight: bold; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;" class="text-dark" {% endif %}>
+                      {% for calendar_list in calendar_lists %}
+                        {% if calendar_list.scheduled_time|date:"d" == we|date:"d" %}
+                          {{calendar_list.scheduled_time|date:"H:i"}} {{calendar_list.contents}}</br>
+                        {% endif %}
+                      {% endfor %}
+                    </td>
+                  {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+<div class="container mt-5">
+  <h3>오늘 최신 뉴스</h3>
+</div>
+
+<div class="container my-2 p-0" style="border: 2px solid #495057; border-radius: 15px; overflow-y:auto; height:100%;">
+  {% if news %}
+    {% for new in news%}
+      <a class="text-decoration-none news" href={{new.news_link}} target='_blank'>
+        <div class="m-3 px-5 py-4 text-white news" style="border: 2px solid #495057;">
+          <div style="display:inline-block; width:80%;">
+            <div class="mb-2 text-white-50"">
+              <span class="p-1 text-white" style="background-color:#495057; border-radius: 5px;">{{new.post_date|date:"H:i"}}</span>
+              {{new.post_date|date:"Y년 n월 j일 D"}}
+            </div>
+            <h5>{{new.title}}</h5>
+          </div>
+          <div style="display:inline-block; width:19%;">
+            <img src={{new.img_link}} style="width:100%;height:10%;">
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+<div class="input-group mb-3" style="width:40%;">
+        <label class="input-group-text text-white bg-secondary" for="crypto_currency">Cryptocurrency exchange</label>
+        <select name="crypto_currency" id="crypto_currency" class="form-select text-white bg-secondary" aria-label="Default select example">
+            {% for crypto in crypto_list %}
+            <option value={{crypto.id}} {% if crypto.id == select_id %} selected {% endif %} >  {{crypto.crypto_currency}}: {{crypto.api_name}}</option>
+            {% endfor %}
+        </select>
+</div>

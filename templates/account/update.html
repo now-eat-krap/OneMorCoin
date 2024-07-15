@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-3 h-100">
+    <form method="post">
+        {% csrf_token %}
+        {% include "form_errors.html" %}
+        <h4>Cryptocurrency Information</h4>
+        <div class="mb-3">
+            <label for="crypto_currency">Cryptocurrency exchange</label>
+            <select name="crypto_currency" id="crypto_currency" class="form-select text-white bg-dark" aria-label="Default select example">
+                <option value="binance" {% if form.crypto_currency.value == 'binance' %}selected{% endif %}>binance</option>
+                <option value="bybit" {% if form.crypto_currency.value == 'bybit' %}selected{% endif %}>bybit</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="api_name">API Name</label>
+            <input type="text" class="form-control text-white bg-dark" name="api_name" id="api_name"
+                   value="{{ form.api_name.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="api_key">API Key</label>
+            <input type="text" class="form-control text-white bg-dark" name="api_key" id="api_key"
+                   value="{{ form.api_key.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="api_secret">API Secret</label>
+            <input type="text" class="form-control text-white bg-dark" name="api_secret" id="api_secret"
+                   value="{{ form.api_secret.value|default_if_none:'' }}">
+        </div>
+
+        <div style="float:right">
+            <button type="submit" class="btn btn-primary">update</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

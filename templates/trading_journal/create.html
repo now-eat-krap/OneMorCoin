@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="p-3 text-white mx-1 my-1 px-5" style="margin-bottom:0px; background-color:black; border: 1px solid black; border-radius: 15px;">Trading Jouranl</h2>
+
+<form class="h-100" enctype="multipart/form-data" method="post" action="{% url 'trading_journal:create' user.pk %}">
+  <div class="container my-5 p-0">
+  {% csrf_token %}
+  {% include "form_errors.html" %}
+    <div class="input-group m-3">
+      <span class="input-group-text text-white bg-secondary" for="crypto_currency">거래소</span>
+      <select name="crypto_currency" id="crypto_currency" class="form-select text-white bg-dark" aria-label="Default select example">
+        <option value="BINANCE" {% if currency == "BINANCE" %} selected {% endif %}>Binance</option>
+        <option value="BYBIT" {% if currency == "BYBIT" %} selected {% endif %} >Bybit</option>
+      </select>
+
+      <span class="input-group-text text-white bg-secondary" for="symbol">거래 코인</span>
+      <select name="symbol" id="symbol" class="form-select text-white bg-dark" aria-label="Default select example">
+        <option value="BTCUSDT" {% if symbol == "BTCUSDT" %} selected {% endif %}>BTCUSDT</option>
+        <option value="ETHUSDT" {% if symbol == "ETHUSDT" %} selected {% endif %}>ETHUSDT</option>
+      </select>
+      <button id="btn" type="submit" class="btn btn-primary">확인</button>
+    </div>
+    {% if symbol and currency  %}
+      <div class="input-group m-3 w-100">
+        <span class="input-group-text text-white bg-secondary">분석 시간</span>
+        <span class="input-group-text text-white bg-secondary"><input class="mx-1" type='checkbox' name='analysis_time' value='1M' {% for analysis in analysis_time %} {% if analysis == "1M" %} checked {% endif %} {% endfor %}>1M</span>
+        <span class="input-group-text text-white bg-secondary"><input class="mx-1" type='checkbox' name='analysis_time' value='1W' {% for analysis in analysis_time %} {% if analysis == "1W" %} checked {% endif %} {% endfor %}>1W</span>
+        <span class="input-group-text text-white bg-secondary"><input class="mx-1" type='checkbox' name='analysis_time' value='1D' {% for analysis in analysis_time %} {% if analysis == "1D" %} checked {% endif %} {% endfor %}>1D</span>
+        <span class="input-group-text text-white bg-secondary"><input class="mx-1" type='checkbox' name='analysis_time' value='4H' {% for analysis in analysis_time %} {% if analysis == "4H" %} checked {% endif %} {% endfor %}>4H</span>
+        <span class="input-group-text text-white bg-secondary"><input class="mx-1" type='checkbox' name='analysis_time' value='1H' {% for analysis in analysis_time %} {% if analysis == "1H" %} checked {% endif %} {% endfor %}>1H</span>
+        <span class="input-group-text text-white bg-secondary"><input class="mx-1" type='checkbox' name='analysis_time' value='15m' {% for analysis in analysis_time %} {% if analysis == "15m" %} checked {% endif %} {% endfor %}>15m</span>
+        <button id="btn" type="submit" class="btn btn-primary">확인</button>
+      </div>
+    {% endif %}
+  </div>
+  {% if symbol and currency %}
+  <div class="container-fluid my-3">
+    <div class="row">
+      <div class="col">
+        {% include "advanced_chart.html" %}
+      </div>
+      <div class="col-5">
+        {% if analysis_time|length != 0 %}
+          {% for analysis in analysis_time %}
+            <h4 class="mb-0 mt-3">{{analysis}}</h4>
+            <div class="row p-0 mx-2">
+              <textarea class="col-8" type="text" name="content_{{analysis}}" style="height:100px"></textarea>
+              <input class="col" type = "file" accept = "image/*" name="img_{{analysis}}">
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  {% if symbol and currency %}
+  <div class="container my-3">
+    <h4 class="mb-0 mt-3">분석</h4>
+    <textarea class="mx-3" type="text" name="transaction_content" style="height:100px; width:100%;"></textarea>
+
+    <div class="input-group m-3 w-100">
+      <span class="input-group-text text-white bg-secondary">진입가</span>
+      <input class="form-control" type="text" name="entry_price">
+      <span class="input-group-text text-white bg-secondary">TP</span>
+      <input class="form-control" type="text" name="tp">
+      <span class="input-group-text text-white bg-secondary">SL</span>
+      <input class="form-control" type="text" name="sl">
+      <span class="input-group-text text-white bg-secondary">진입 물량</span>
+      <input class="form-control" type="text" name="amount">
+    </div>
+    <button id="btn" type="submit" class="btn btn-primary m-3" style="float:right;">작성하기</button>
+  </div>
+  {% endif %}
+</form>
+
+
+{% endblock %}
+

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="p-3 text-white mx-1 my-1 px-5" style="margin-bottom:0px; background-color:black; border: 1px solid black; border-radius: 15px;">Analysis</h2>
+<div class="container-fluid h-100">
+{% include "sidebar.html" %}
+  <div style="width:70%; float:left">
+    <div class="m-3">
+      <h1>Summary</h1>
+      {% include "select_currency.html" %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

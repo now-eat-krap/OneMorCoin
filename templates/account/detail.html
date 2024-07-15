@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="p-3 text-white" style="margin-bottom:0px; background-color:black;">User Profile</h2>
+<div class="container my-3 h-100">
+    <div class="mb-4">
+        <h1 class="border-bottom border-3">Hello! <small>{{user.nickname}} ({{user.email}})</small></h1>
+    </div>
+    <table class="table table-dark caption-top text-white">
+        <caption class="text-white"><h4>User Information</h4></caption>
+        <thead>
+            <tr>
+                <th scope="col">Email (ID)</th>
+                <th scope="col">NickName</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ user.email}}</td>
+                <td>{{ user.nickname}}</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-dark caption-top text-white">
+        <caption class="text-white"><h4>Cryptocurrency Information</h4></caption>
+        <thead>
+            <tr>
+                <th scope="col">Cryptocurrency Exchange</th>
+                <th scope="col">API Name</th>
+                <th scope="col">API Key</th>
+                <th scope="col">API Secret</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style = "word-break: break-all;">
+          {% for crypto in crypto_list %}
+            <tr>
+                <td>{{ crypto.crypto_currency}}</td>
+                <td>{{ crypto.api_name}}</td>
+                <td>{{ crypto.api_key}}</td>
+                <td>{{ crypto.api_secret}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" onclick="location.href='{% url 'account:update' crypto.id %}'"> Update</button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'account:delete' crypto.id %}'"> Delete</button>
+                </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    <div style="float:right">
+        <button type="button" class="btn btn-primary" onclick="location.href='{% url 'account:create' %}'">Create</button>
+        <button type="button" class="btn btn-secondary" onclick="location.href='/'">Home</button>
+    </div>
+</div>
+{% endblock %}

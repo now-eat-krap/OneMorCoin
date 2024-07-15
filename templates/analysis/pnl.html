@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% include "sidebar.html" %}
+<div class="container my-3 h-100" style="margin-left:17%;">
+  <h1>PNL</h1>
+  <div class="mb-3">
+    {% include "select_currency.html" %}
+  </div>
+</div>
+
+{% endblock %}

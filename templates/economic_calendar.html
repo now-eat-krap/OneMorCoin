@@ -1,0 +1,7 @@
+<div>
+{% if calendar_lists %}
+  {% for calendar_list in calendar_lists %}
+      <p>{{calendar_list.scheduled_time| date:"Y-m-d(D) A h시 i분" }} {{calendar_list.contents}}</p>
+  {% endfor %}
+{% endif %}
+</div>
